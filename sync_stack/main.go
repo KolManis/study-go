@@ -22,7 +22,7 @@ func (b *Stack) Push(value string) {
 	b.data = append(b.data, value)
 }
 
-func (b *Stack) Pop() {
+func (b *Stack) Pop() string {
 	b.mutex.Lock()
 	defer b.mutex.Unlock()
 
@@ -30,18 +30,9 @@ func (b *Stack) Pop() {
 		panic("pop: stack is empty")
 	}
 
+	value := b.data[len(b.data)-1]
 	b.data = b.data[:len(b.data)-1]
-}
-
-func (b *Stack) Top() string {
-	b.mutex.Lock()
-	defer b.mutex.Unlock()
-
-	if len(b.data) == 0 {
-		panic("top: stack is empty")
-	}
-
-	return b.data[len(b.data)-1]
+	return value
 }
 
 var stack Stack
@@ -54,8 +45,7 @@ func producer() {
 
 func consumer() {
 	for i := 0; i < 10; i++ {
-		_ = stack.Top()
-		stack.Pop()
+		stack.Pop() //Тут могли встроиться, поэтому замена на 1 метод!!!
 	}
 }
 
