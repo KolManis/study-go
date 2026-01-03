@@ -26,7 +26,7 @@ func (b *Stack) Pop() {
 	b.mutex.Lock()
 	defer b.mutex.Unlock()
 
-	if len(b.data) < 0 {
+	if len(b.data) == 0 {
 		panic("pop: stack is empty")
 	}
 
@@ -37,7 +37,7 @@ func (b *Stack) Top() string {
 	b.mutex.Lock()
 	defer b.mutex.Unlock()
 
-	if len(b.data) < 0 {
+	if len(b.data) == 0 {
 		panic("top: stack is empty")
 	}
 
